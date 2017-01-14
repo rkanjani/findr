@@ -34,13 +34,9 @@ public class DestinationAdapter extends ArrayAdapter<Point>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        LinearLayout row = (LinearLayout) parent.findViewById(R.id.destination_row);
-
-
 
         //Access HASHMAP and get point object
         final Point destination = getItem(position);
-
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -50,6 +46,7 @@ public class DestinationAdapter extends ArrayAdapter<Point>{
         TextView distance = (TextView) convertView.findViewById(R.id.distance);
         TextView name = (TextView) convertView.findViewById(R.id.name);
 
+        LinearLayout row = (LinearLayout) convertView.findViewById(R.id.destination_row);
 
 
         // Populate the data into the template view using the data object
