@@ -10,10 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
 
 import uoec.findr.com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity;
 
@@ -76,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView mapView = (ImageView) findViewById(R.id.map);
         mapView.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.map, 600, 600));
+
+        createPoints();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -93,5 +100,28 @@ public class MainActivity extends AppCompatActivity {
 
             }
         } else super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void createPoints() {
+        //create database
+        DBHandler db = new DBHandler(this);
+
+        db.getAllNeighbours();
+
+        List<Point> points = db.getAllPoints();
+
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
+
+        for (int i = 0; i < points.size() - 1; i++) {
+            Point point1 = points.get(i);
+            Point point2 = points.get(i + 1);
+
+            LineView lineView = new LineView(getBaseContext());
+            lineView.setStart(point1.getXCord());
+            lineView.setEnd(point2.getXCord());
+            lineView.setLineWidth(10);
+//            lineView.
+            layout.addView(lineView);
+        }
     }
 }
