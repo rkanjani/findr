@@ -173,10 +173,10 @@ class Graph {
 
     /** Prints a path from the source to the specified vertex */
     public LinkedList<Vertex> printPath(String endName) {
-        if (!graph.containsKey(endName)) {
+        /*if (!graph.containsKey(endName)) {
             System.err.printf("Graph doesn't contain end vertex \"%s\"\n", endName);
             return null;
-        }
+        }*/
         return graph.get(endName).printPath(new LinkedList<Vertex>());
     }
 }
