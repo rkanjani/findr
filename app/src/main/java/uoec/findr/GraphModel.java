@@ -11,16 +11,16 @@ public class GraphModel {
     public Graph g;
     public HashMap<Integer, Point> points;
 
-    public GraphModel(HashMap<String, Point> points) {
+    public GraphModel(HashMap<Integer, Point> points) {
         this.points = points;
         LinkedList<Graph.Edge> edgeList = new LinkedList<Graph.Edge>();
-        ListIterator<Point> pointsIterator = points.values().listIterator();
+        Iterator<Point> pointsIterator = points.values().iterator();
 
         while(pointsIterator.hasNext()){
             Point p = pointsIterator.next();
 
             LinkedList<Integer> neighboors = p.neighbours;
-            ListIterator<Point> neighboorsIterator = neighboors.listIterator();
+            ListIterator<Integer> neighboorsIterator = neighboors.listIterator();
 
             while(neighboorsIterator.hasNext()){
                 Point n = points.get(neighboorsIterator.next());
