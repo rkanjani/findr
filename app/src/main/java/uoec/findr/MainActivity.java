@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int BARCODE_READER_REQUEST_CODE = 0;
     private HashMap<Integer, Point> pointHashMap;
+    private List<Point> points;
+    private GraphModel graphModel;
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
@@ -73,9 +75,11 @@ public class MainActivity extends AppCompatActivity {
         DBHandler db = new DBHandler(this);
 
         //initialize db with some points
-        db.addPoint(new Point("PointA", 500, 500, 3));
-        db.addPoint(new Point("PointB", 1000, 1000, 3));
+        db.addPoint(new Point("PointA", 1060, 1052, 3));
+        db.addPoint(new Point("PointB", 408, 1052, 3));
+        db.addPoint(new Point("PointC", 408, 624, 3));
         db.addNeighbour(1,2);
+        db.addNeighbour(2,3);
         db.getAllNeighbours();
 
         List<Point> points = db.getAllPoints();
@@ -86,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
             pointHashMap.put(p.getId(), p);
         }
 
+        int startPointID = getIntent().getIntExtra("startPoint", -1);
+        int endPointID = getIntent().getIntExtra("endPoint", -1);
+
+        graphModel = new GraphModel(pointHashMap);
+
+        List<Point> path  = graphModel.findPath(Integer.toString(startPointID), Integer.toString(endPointID));
+        points.addAll(path);
+        
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,13 +135,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createPoints() {
-        //create database
-        DBHandler db = new DBHandler(this);
-
-        db.getAllNeighbours();
-
-        List<Point> points = db.getAllPoints();
-
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
 
         for (int i = 0; i < points.size() - 1; i++) {
