@@ -74,9 +74,11 @@ public class MainActivity extends AppCompatActivity {
         DBHandler db = new DBHandler(this);
 
         //initialize db with some points
-        db.addPoint(new Point("PointA", 500, 500, 3));
-        db.addPoint(new Point("PointB", 1000, 1000, 3));
+        db.addPoint(new Point("PointA", 1060, 1052, 3));
+        db.addPoint(new Point("PointB", 408, 1052, 3));
+        db.addPoint(new Point("PointC", 408, 624, 3));
         db.addNeighbour(1,2);
+        db.addNeighbour(2,3);
         db.getAllNeighbours();
 
         List<Point> points = db.getAllPoints();
