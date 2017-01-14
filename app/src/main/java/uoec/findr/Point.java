@@ -14,8 +14,7 @@ public class Point {
     LinkedList<Integer> neighbours;
 
     //Constuctor
-    public Point(int id, String name, int xCord, int yCord, int floor) {
-        this.id = id;
+    public Point(String name, int xCord, int yCord, int floor) {
         this.name = name;
         this.xCord = xCord;
         this.yCord = yCord;
