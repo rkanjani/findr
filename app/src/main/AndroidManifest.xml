@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uoec.findr">
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -21,7 +22,7 @@
         </activity>
         <activity
             android:name=".com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>
