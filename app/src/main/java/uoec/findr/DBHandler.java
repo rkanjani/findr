@@ -123,7 +123,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Point point = new Point(0, null, 0, 0, 0);
+                Point point = new Point(null, 0, 0, 0);
                 point.setId(Integer.parseInt(cursor.getString(0)));
                 point.setName(cursor.getString(1));
                 point.setXCord(cursor.getInt(2));

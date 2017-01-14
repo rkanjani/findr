@@ -25,7 +25,7 @@ import uoec.findr.com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static final int BARCODE_READER_REQUEST_CODE = 0;
-
+    private HashMap<Integer, Point> pointHashMap;
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
@@ -69,6 +69,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //create database
+        DBHandler db = new DBHandler(this);
+
+        //initialize db with some points
+        db.addPoint(new Point("PointA", 500, 500, 3));
+        db.addPoint(new Point("PointB", 1000, 1000, 3));
+        db.addNeighbour(1,2);
+        db.getAllNeighbours();
+
+        List<Point> points = db.getAllPoints();
+        ListIterator<Point> iter = points.listIterator();
+        pointHashMap = new HashMap<>();
+        while (iter.hasNext()){
+            Point p = iter.next();
+            pointHashMap.put(p.getId(), p);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
