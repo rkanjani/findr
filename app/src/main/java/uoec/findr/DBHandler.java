@@ -112,7 +112,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public List<Point> getAllPoints() {
-        List<Point> pointList = new ArrayList<Point>();
+        /*List<Point> pointList = new ArrayList<Point>();
 
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_POINT;
@@ -132,7 +132,25 @@ public class DBHandler extends SQLiteOpenHelper {
                 // Adding contact to list
                 pointList.add(point);
             } while (cursor.moveToNext());
-        }
+        }*/
+
+
+        List<Point> pointList = new ArrayList<>();
+        Point p1 = new Point("PointA", 1060, 1052, 3);
+        p1.setId(1);
+        p1.addNeighbour(2);
+        pointList.add(p1);
+
+        Point p2 = new Point("PointB", 408, 1052, 3);
+        p2.setId(2);
+        p2.addNeighbour(1);
+        p2.addNeighbour(2);
+        pointList.add(p2);
+
+        Point p3 = new Point("PointC", 408, 624, 3);
+        p3.setId(3);
+        p3.addNeighbour(2);
+        pointList.add(p3);
 
         // return contact list
         return pointList;
@@ -157,7 +175,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 point1.addNeighbour(id2);
 
                 Point point2 = getPoint(id2);
-                point1.addNeighbour(id1);
+                point2.addNeighbour(id1);
 
             } while (cursor.moveToNext());
         }
