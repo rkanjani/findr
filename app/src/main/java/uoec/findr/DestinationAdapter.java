@@ -63,7 +63,7 @@ public class DestinationAdapter extends ArrayAdapter<Point>{
                 Point endPoint = getItem(position);
 
                 //Replace barcode capture activity with map
-                Intent intent = new Intent(getContext(), BarcodeCaptureActivity.class);
+                Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.putExtra("startPoint", destinations.get(0).getId());
                 intent.putExtra("endPoint", endPoint.getId());
             }

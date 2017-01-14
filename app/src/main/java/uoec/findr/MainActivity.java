@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
         graphModel = new GraphModel(pointHashMap);
 
+        List<Point> path  = graphModel.findPath(Integer.toString(startPointID), Integer.toString(endPointID));
+        points.addAll(path);
+        
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
