@@ -107,9 +107,13 @@ public class MainActivity extends AppCompatActivity {
                 if (data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     //ADD CODE TO GO TO NEXT INTENT
-                    Toast.makeText(MainActivity.this, barcode.displayValue, Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(getApplicationContext(), PotentialDestinations.class);
+                    intent.putExtra("startPoint", Integer.parseInt(barcode.displayValue));
+                    startActivity(intent);
+
                 } else {
-                    System.out.println("SHIT BROKE");
+                    System.out.println("things BROKE");
                 }
             } else {
                 System.out.println("barcode returned error!");
