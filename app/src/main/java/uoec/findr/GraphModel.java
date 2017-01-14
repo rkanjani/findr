@@ -4,8 +4,13 @@ package uoec.findr;
  * Created by nikhilperi on 2017-01-14.
  */
 
-import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.NavigableSet;
+import java.util.TreeSet;
 
 public class GraphModel {
     public Graph g;
@@ -52,17 +57,17 @@ class Graph {
     /** One edge of the graph (only used by Graph constructor) */
     public static class Edge {
         public final String v1, v2;
-        public final float dist;
+        public final double dist;
 
         public Edge(Point p1, Point p2) {
-            this.v1 = p1.id;
-            this.v2 = p2.id;
+            this.v1 = p1.id.toString();
+            this.v2 = p2.id.toString();
             if (p1.name == "stairs" && p2.name == "stair"){
                 this.dist = 0;
             }
             else
             {
-                this.dist = Math.sqrt(Math.pow((p1.xCoord - p2.xCoord), 2) + Math.pow((v1.yCoord - v2.yCoord), 2));
+                this.dist = Math.sqrt(Math.pow((p1.xCord - p2.xCord), 2) + Math.pow((p1.yCord - p2.yCord), 2));
             }
         }
     }
@@ -70,9 +75,9 @@ class Graph {
     /** One vertex of the graph, complete with mappings to neighbouring vertices */
     public static class Vertex implements Comparable<Vertex>{
         public final String name;
-        public int dist = Integer.MAX_VALUE; // MAX_VALUE assumed to be infinity
+        public Double dist = Double.MAX_VALUE; // MAX_VALUE assumed to be infinity
         public Vertex previous = null;
-        public final Map<Vertex, Float> neighbours = new HashMap<>();
+        public final Map<Vertex, Double> neighbours = new HashMap<>();
 
         public Vertex(String id)
         {
@@ -88,7 +93,7 @@ class Graph {
             else
             {
                 list.add(this);
-                this.previous.printPath(list);
+                return this.previous.printPath(list);
             }
         }
 
@@ -97,7 +102,7 @@ class Graph {
             if (dist == other.dist)
                 return name.compareTo(other.name);
 
-            return Float.compare(dist, other.dist);
+            return Double.compare(dist, other.dist);
         }
 
         @Override public String toString()
@@ -135,9 +140,10 @@ class Graph {
         // set-up vertices
         for (Vertex v : graph.values()) {
             v.previous = v == source ? source : null;
-            v.dist = v == source ? 0 : Integer.MAX_VALUE;
+            v.dist = v == source ? 0 : Double.MAX_VALUE;
             q.add(v);
         }
+
 
         dijkstra(q);
     }
@@ -151,10 +157,10 @@ class Graph {
             if (u.dist == Integer.MAX_VALUE) break; // we can ignore u (and any other remaining vertices) since they are unreachable
 
             //look at distances to each neighbour
-            for (Map.Entry<Vertex, Integer> a : u.neighbours.entrySet()) {
+            for (Map.Entry<Vertex, Double> a : u.neighbours.entrySet()) {
                 v = a.getKey(); //the neighbour in this iteration
 
-                final int alternateDist = u.dist + a.getValue();
+                final double alternateDist = u.dist + a.getValue();
                 if (alternateDist < v.dist) { // shorter path to neighbour found
                     q.remove(v);
                     v.dist = alternateDist;
@@ -171,6 +177,6 @@ class Graph {
             System.err.printf("Graph doesn't contain end vertex \"%s\"\n", endName);
             return null;
         }
-        return graph.get(endName).printPath();
+        return graph.get(endName).printPath(new LinkedList<Vertex>());
     }
 }

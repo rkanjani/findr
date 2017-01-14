@@ -6,11 +6,11 @@ import java.util.LinkedList;
  * Created by tmetade on 2017-01-14.
  */
 public class Point {
-    private int id;
-    private String name;
-    private int xCord;
-    private int yCord;
-    private int floor;
+     Integer id;
+     String name;
+     int xCord;
+     int yCord;
+     int floor;
     LinkedList<Integer> neighbours;
 
     //Constuctor
