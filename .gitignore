@@ -1,2 +1,5 @@
-Findr/.idea/
-Findr/build
+.idea/
+build/
+.gradle/
+findr.iml
+local.properties
