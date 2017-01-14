@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -93,10 +94,12 @@ public class MainActivity extends AppCompatActivity {
         int startPointID = getIntent().getIntExtra("startPoint", -1);
         int endPointID = getIntent().getIntExtra("endPoint", -1);
 
-        graphModel = new GraphModel(pointHashMap);
+        if (startPointID != -1 && endPointID != -1) {
+            graphModel = new GraphModel(pointHashMap);
 
-        List<Point> path  = graphModel.findPath(Integer.toString(startPointID), Integer.toString(endPointID));
-        points.addAll(path);
+            List<Point> path = graphModel.findPath(Integer.toString(startPointID), Integer.toString(endPointID));
+            points.addAll(path);
+        }
         
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createPoints() {
+        points = new ArrayList<>();
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
 
         for (int i = 0; i < points.size() - 1; i++) {
