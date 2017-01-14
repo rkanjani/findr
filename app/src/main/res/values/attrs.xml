@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LineView">
+        <attr name="start" format="float" />
+        <attr name="end" format="float" />
+        <attr name="width" format="float" />
+        <attr name="angle" format="integer" />
+        <attr name="position_y" format="float"/>
+    </declare-styleable>
+</resources>
