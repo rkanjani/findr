@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int BARCODE_READER_REQUEST_CODE = 0;
     private HashMap<Integer, Point> pointHashMap;
+    private List<Point> points;
     private GraphModel graphModel;
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
             Point p = iter.next();
             pointHashMap.put(p.getId(), p);
         }
+
+        int startPointID = getIntent().getIntExtra("startPoint", -1);
+        int endPointID = getIntent().getIntExtra("endPoint", -1);
 
         graphModel = new GraphModel(pointHashMap);
 
