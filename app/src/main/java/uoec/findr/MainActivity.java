@@ -74,16 +74,18 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //create database
         DBHandler db = new DBHandler(this);
+        db.onUpgrade(db.getWritableDatabase(), 1, 2);
 
         //initialize db with some points
-        db.addPoint(new Point("PointA", 1060, 1052, 3));
-        db.addPoint(new Point("PointB", 408, 1052, 3));
-        db.addPoint(new Point("PointC", 408, 624, 3));
-        db.addNeighbour(1,2);
+        //db.addPoint(new Point("PointA", 1060, 1052, 3));
+        //db.addPoint(new Point("PointB", 408, 1052, 3));
+        //db.addPoint(new Point("PointC", 408, 624, 3));
+        /*db.addNeighbour(1,2);
         db.addNeighbour(2,3);
-        db.getAllNeighbours();
+        db.getAllNeighbours();*/
 
         List<Point> points = db.getAllPoints();
+
         ListIterator<Point> iter = points.listIterator();
         pointHashMap = new HashMap<>();
         while (iter.hasNext()){
