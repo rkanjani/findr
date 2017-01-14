@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         db.getAllNeighbours();
 
         List<Point> points = db.getAllPoints();
-        ListIterator iter = points.listIterator();
+        ListIterator<Point> iter = points.listIterator();
         pointHashMap = new HashMap<>();
         while (iter.hasNext()){
             Point p = iter.next();
