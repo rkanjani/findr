@@ -45,7 +45,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_VERTEX_TABLE = "CREATE TABLE " + TABLE_POINT + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTO_INCREMENT,"
-                + KEY_NAME + "TEXT,"
+                + KEY_NAME + " TEXT,"
                 + KEY_X_CORD + " INTEGER,"
                 + KEY_Y_CORD + " INTEGER,"
                 + KEY_FLOOR + "INTEGER" + ")";
