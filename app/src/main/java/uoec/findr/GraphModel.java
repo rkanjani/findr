@@ -8,25 +8,41 @@ import java.io.*;
 import java.util.*;
 
 public class GraphModel {
-    private static final Graph.Edge[] GRAPH = {
-            new Graph.Edge("a", "b", 7),
-            new Graph.Edge("a", "c", 9),
-            new Graph.Edge("a", "f", 14),
-            new Graph.Edge("b", "c", 10),
-            new Graph.Edge("b", "d", 15),
-            new Graph.Edge("c", "d", 11),
-            new Graph.Edge("c", "f", 2),
-            new Graph.Edge("d", "e", 6),
-            new Graph.Edge("e", "f", 9),
-    };
-    private static final String START = "a";
-    private static final String END = "e";
+    private Graph g;
+    private HashMap<String, Point> points;
 
-    public static void main(String[] args) {
-        Graph g = new Graph(GRAPH);
-        g.dijkstra(START);
-        g.printPath(END);
-        //g.printAllPaths();
+    public GraphModel(HashMap<String, Point> points) {
+        this.points = points;
+        LinkedList<Graph.Edge> edgeList = new LinkedList<Graph.Edge>();
+        ListIterator<Point> pointsIterator = points.values().listIterator();
+
+        while(pointsIterator.hasNext()){
+            Point p = pointsIterator.next();
+
+            LinkedList<Point> neighboors = p.neighboors;
+            ListIterator<Point> neighboorsIterator = neighboors.listIterator();
+
+            while(neighboorsIterator.hasNext()){
+                Point n = neighboorsIterator.next();
+                Graph.Edge e = new Graph.Edge(p, n);
+                edgeList.add(e);
+            }
+        }
+        g = new Graph(edgeList);
+    }
+
+    public LinkedList<Point> findPath(String startQRHash, String endQRHash){
+        g.dijkstra(startQRHash);
+
+        LinkedList<Point> path = new LinkedList<Point>();
+        LinkedList<Graph.Vertex> vertexPath= g.printPath(endQRHash);
+        ListIterator<Graph.Vertex> vertexListIterator = vertexPath.listIterator();
+
+        while(vertexListIterator.hasNext()){
+            path.add(points.get(vertexListIterator.next().name));
+        }
+
+        return path;
     }
 }
 
@@ -36,11 +52,18 @@ class Graph {
     /** One edge of the graph (only used by Graph constructor) */
     public static class Edge {
         public final String v1, v2;
-        public final int dist;
-        public Edge(String v1, String v2, int dist) {
-            this.v1 = v1;
-            this.v2 = v2;
-            this.dist = dist;
+        public final float dist;
+
+        public Edge(Point p1, Point p2) {
+            this.v1 = p1.id;
+            this.v2 = p2.id;
+            if (p1.name == "stairs" && p2.name == "stair"){
+                this.dist = 0;
+            }
+            else
+            {
+                this.dist = Math.sqrt(Math.pow((p1.xCoord - p2.xCoord), 2) + Math.pow((v1.yCoord - v2.yCoord), 2));
+            }
         }
     }
 
@@ -49,27 +72,23 @@ class Graph {
         public final String name;
         public int dist = Integer.MAX_VALUE; // MAX_VALUE assumed to be infinity
         public Vertex previous = null;
-        public final Map<Vertex, Integer> neighbours = new HashMap<>();
+        public final Map<Vertex, Float> neighbours = new HashMap<>();
 
-        public Vertex(String name)
+        public Vertex(String id)
         {
-            this.name = name;
+            this.name = id;
         }
 
-        private void printPath()
+        private LinkedList<Vertex> printPath(LinkedList<Vertex> list)
         {
-            if (this == this.previous)
+            if (this == this.previous || this.previous == null)
             {
-                System.out.printf("%s", this.name);
-            }
-            else if (this.previous == null)
-            {
-                System.out.printf("%s(unreached)", this.name);
+                return list;
             }
             else
             {
-                this.previous.printPath();
-                System.out.printf(" -> %s(%d)", this.name, this.dist);
+                list.add(this);
+                this.previous.printPath(list);
             }
         }
 
@@ -78,18 +97,18 @@ class Graph {
             if (dist == other.dist)
                 return name.compareTo(other.name);
 
-            return Integer.compare(dist, other.dist);
+            return Float.compare(dist, other.dist);
         }
 
         @Override public String toString()
         {
-            return "(" + name + ", " + dist + ")";
+            return name;
         }
     }
 
     /** Builds a graph from a set of edges */
-    public Graph(Edge[] edges) {
-        graph = new HashMap<>(edges.length);
+    public Graph(LinkedList<Edge> edges) {
+        graph = new HashMap<>(edges.size());
 
         //one pass to find all vertices
         for (Edge e : edges) {
@@ -147,20 +166,11 @@ class Graph {
     }
 
     /** Prints a path from the source to the specified vertex */
-    public void printPath(String endName) {
+    public LinkedList<Vertex> printPath(String endName) {
         if (!graph.containsKey(endName)) {
             System.err.printf("Graph doesn't contain end vertex \"%s\"\n", endName);
-            return;
+            return null;
         }
-
-        graph.get(endName).printPath();
-        System.out.println();
-    }
-    /** Prints the path from the source to every vertex (output order is not guaranteed) */
-    public void printAllPaths() {
-        for (Vertex v : graph.values()) {
-            v.printPath();
-            System.out.println();
-        }
+        return graph.get(endName).printPath();
     }
 }
