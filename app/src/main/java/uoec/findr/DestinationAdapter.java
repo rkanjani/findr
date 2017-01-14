@@ -6,24 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-
-import uoec.findr.com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity;
-
-import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by rohan on 2017-01-14.
  * Some code taken from https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
  */
 
-public class DestinationAdapter extends ArrayAdapter<Point>{
+public class DestinationAdapter extends ArrayAdapter<Point> {
     private ArrayList<Point> destinations;
 
     public DestinationAdapter(Context context, ArrayList<Point> destinations) {
@@ -32,7 +25,7 @@ public class DestinationAdapter extends ArrayAdapter<Point>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
 
         //Access HASHMAP and get point object
@@ -57,7 +50,6 @@ public class DestinationAdapter extends ArrayAdapter<Point>{
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = (Integer) view.getTag();
                 // Access the row position here to get the correct data item
                 Point endPoint = getItem(position);
 
@@ -65,6 +57,7 @@ public class DestinationAdapter extends ArrayAdapter<Point>{
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.putExtra("startPoint", destinations.get(0).getId());
                 intent.putExtra("endPoint", endPoint.getId());
+                getContext().startActivity(intent);
             }
         });
 
