@@ -8,8 +8,8 @@ import java.io.*;
 import java.util.*;
 
 public class GraphModel {
-    private Graph g;
-    private HashMap<String, Point> points;
+    public Graph g;
+    public HashMap<Integer, Point> points;
 
     public GraphModel(HashMap<String, Point> points) {
         this.points = points;
@@ -19,11 +19,11 @@ public class GraphModel {
         while(pointsIterator.hasNext()){
             Point p = pointsIterator.next();
 
-            LinkedList<Point> neighboors = p.neighboors;
+            LinkedList<Integer> neighboors = p.neighbours;
             ListIterator<Point> neighboorsIterator = neighboors.listIterator();
 
             while(neighboorsIterator.hasNext()){
-                Point n = neighboorsIterator.next();
+                Point n = points.get(neighboorsIterator.next());
                 Graph.Edge e = new Graph.Edge(p, n);
                 edgeList.add(e);
             }
