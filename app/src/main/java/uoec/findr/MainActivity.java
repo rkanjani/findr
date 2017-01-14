@@ -132,11 +132,7 @@ public class MainActivity extends AppCompatActivity {
             Point point1 = points.get(i);
             Point point2 = points.get(i + 1);
 
-            LineView lineView = new LineView(getBaseContext());
-            lineView.setStart(point1.getXCord());
-            lineView.setEnd(point2.getXCord());
-            lineView.setLineWidth(10);
-//            lineView.
+            LineView lineView = new LineView(getBaseContext(), point1, point2);
             layout.addView(lineView);
         }
     }

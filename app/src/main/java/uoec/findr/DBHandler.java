@@ -44,15 +44,15 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_VERTEX_TABLE = "CREATE TABLE " + TABLE_POINT + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTO_INCREMENT,"
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_NAME + " TEXT,"
                 + KEY_X_CORD + " INTEGER,"
                 + KEY_Y_CORD + " INTEGER,"
-                + KEY_FLOOR + "INTEGER" + ")";
+                + KEY_FLOOR + " INTEGER" + ")";
 
         String CREATE_RELATIONSHIP_TABLE = "CREATE TABLE " + TABLE_RELATIONSHIP + "("
-                + KEY_ID1 + "INTEGER,"
-                + KEY_ID2 + "INTEGER,"
+                + KEY_ID1 + " INTEGER,"
+                + KEY_ID2 + " INTEGER,"
                 + "FOREIGN KEY(" + KEY_ID1 + ") REFERENCES " + TABLE_POINT + "(" + KEY_ID + "),"
                 + "FOREIGN KEY(" + KEY_ID2 + ") REFERENCES " + TABLE_POINT + "(" + KEY_ID + ") )";
 
@@ -105,8 +105,8 @@ public class DBHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
 
-        Point point = new Point(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4));
+        Point point = new Point(cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4));
+        point.setId(Integer.parseInt(cursor.getString(0)));
         // return contact
         return point;
     }

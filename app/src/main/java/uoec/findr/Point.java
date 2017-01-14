@@ -19,6 +19,7 @@ public class Point {
         this.xCord = xCord;
         this.yCord = yCord;
         this.floor = floor;
+        neighbours = new LinkedList<>();
     }
 
     //Setters and Getters
