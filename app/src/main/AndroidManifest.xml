@@ -27,6 +27,9 @@
         <activity
             android:name=".com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".PotentialDestinations"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import uoec.findr.com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity;
@@ -32,7 +34,7 @@ public class DestinationAdapter extends ArrayAdapter<Point>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        LinearLayout row = (LinearLayout) convertView.findViewById(R.id.destination_row);
+        LinearLayout row = (LinearLayout) parent.findViewById(R.id.destination_row);
 
 
 
