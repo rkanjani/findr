@@ -1,0 +1,34 @@
+-injars /Users/rohan/Documents/uOEC/findr/Findr/app/build/intermediates/transforms/jarMerging/debug/jars/1/1f/combined.jar
+-outjars /Users/rohan/Documents/uOEC/findr/Findr/app/build/intermediates/multi-dex/debug/componentClasses.jar
+
+-libraryjars /Users/rohan/Library/Android/sdk/build-tools/25.0.2/lib/shrinkedAndroid.jar
+
+-forceprocessing
+-dontoptimize
+-dontobfuscate
+-dontusemixedcaseclassnames
+-dontpreverify
+-dontwarn
+-printconfiguration /Users/rohan/Documents/uOEC/findr/Findr/app/build/intermediates/multi-dex/debug/components.flags
+
+
+-keep class uoec.findr.MainActivity {
+    <init>();
+}
+
+-keep class uoec.findr.com.varvet.barcodereadersample.barcode.BarcodeCaptureActivity {
+    <init>();
+}
+
+-keep class com.google.android.gms.common.api.GoogleApiActivity {
+    <init>();
+}
+
+-keep public class * extends android.app.backup.BackupAgent {
+    <init>();
+}
+
+-keep public class * extends java.lang.annotation.Annotation {
+    <fields>;
+    <methods>;
+}
