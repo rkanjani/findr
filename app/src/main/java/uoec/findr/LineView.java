@@ -22,6 +22,17 @@ public class LineView extends View {
         init();
     }
 
+    public LineView(Context context, Point point1, Point point2) {
+        super(context);
+        init();
+
+        start = point1.getXCord();
+        end = point2.getXCord();
+        lineWidth = 10;
+        positionY = point1.getYCord();
+        angle = (float) (Math.atan2(point1.getYCord(), point2.getXCord()) * 180 / Math.PI);
+    }
+
     public LineView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -51,8 +62,10 @@ public class LineView extends View {
 
         super.onDraw(canvas);
         canvas.save();
-        canvas.rotate(angle);
+        canvas.rotate(angle, (end + start) / 2, positionY);
         canvas.drawRect(left, top, right, bottom, paint);
+        canvas.drawCircle(left, positionY + lineWidth / 2, lineWidth + 5, paint);
+        canvas.drawCircle(right, positionY + lineWidth / 2, lineWidth + 5, paint);
         canvas.restore();
     }
 
@@ -62,5 +75,17 @@ public class LineView extends View {
 
     public void setEnd(float end) {
         this.end = end;
+    }
+
+    public void setLineWidth(float lineWidth) {
+        this.lineWidth = lineWidth;
+    }
+
+    public void setAngle(float angle) {
+        this.angle = angle;
+    }
+
+    public void setPositionY(float positionY) {
+        this.positionY = positionY;
     }
 }
