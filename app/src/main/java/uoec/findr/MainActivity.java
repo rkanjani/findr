@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int BARCODE_READER_REQUEST_CODE = 0;
     private HashMap<Integer, Point> pointHashMap;
+    private GraphModel graphModel;
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
             pointHashMap.put(p.getId(), p);
         }
 
+        graphModel = new GraphModel(pointHashMap);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,13 +122,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createPoints() {
-        //create database
-        DBHandler db = new DBHandler(this);
-
-        db.getAllNeighbours();
-
-        List<Point> points = db.getAllPoints();
-
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
 
         for (int i = 0; i < points.size() - 1; i++) {
